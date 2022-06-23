@@ -1,0 +1,24 @@
+{
+  "questions": [
+    {
+      "question": "_alom",
+      "answer": "Salom",
+      "options": [
+        "Salom",
+        "salom",
+        "saloM",
+        "saLom"
+      ]
+    },
+    {
+      "question": "_alom 2",
+      "answer": "Salom 2",
+      "options": [
+        "Salom 2",
+        "salom",
+        "saloM",
+        "saLom"
+      ]
+    }
+  ]
+}
