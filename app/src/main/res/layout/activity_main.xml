@@ -40,6 +40,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
+        android:text="Tori"
         android:id="@+id/editName"
         android:textColor="#df040b"
         android:hint="Enter your name"

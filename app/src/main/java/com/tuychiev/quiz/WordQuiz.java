@@ -1,6 +1,7 @@
 package com.tuychiev.quiz;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -8,23 +9,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class Quiz {
-    static final String LOG_D = "QUIZ: ";
-    static final String FILE_NAME = "questions.json";
+public class WordQuiz {
+    static final String LOG_D = "WORD_QUIZ: ";
+    static final String FILE_NAME = "dj.json";
 
-    private List<Question> questions;
+    private List<Word> words;
 
-    public Quiz(Context context) {
+    public WordQuiz(Context context) {
         String json = loadJSONFromAsset(context);
+        Log.d(LOG_D, json);
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
-        Quiz quiz = gson.fromJson(json, Quiz.class); // deserializes json into target2
+        WordQuiz quiz = gson.fromJson(json, WordQuiz.class); // deserializes json into target2
 
-        //Log.d(LOG_D, quiz.toString());
-        setQuestions(quiz.getQuestions());
+        Log.d(LOG_D, quiz.toString());
+        setQuestions(quiz.getWords());
     }
 
-    public List<Question> getQuestions() {
-        return questions;
+    public List<Word> getWords() {
+        return words;
     }
 
     public String loadJSONFromAsset(Context context) {
@@ -43,7 +45,7 @@ public class Quiz {
         return json;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+    public void setQuestions(List<Word> words) {
+        this.words = words;
     }
 }

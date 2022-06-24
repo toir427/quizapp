@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = nameText.getText().toString();
-                Intent intent = new Intent(getApplicationContext(), QuestionsActivity.class);
-                intent.putExtra("myname", name);
+                //Intent intent = new Intent(getApplicationContext(), QuestionsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), WordsActivity.class);
+                intent.putExtra("username", name);
                 startActivity(intent);
             }
         });

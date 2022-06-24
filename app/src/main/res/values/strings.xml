@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">QuizApp</string>
     <string name="your_score">Your Score</string>
-    <string name="yugesh_verma">Yugesh Verma</string>
-    <string name="projectworldsofficial_gmail_com">projectworldsofficial@gmail.com</string>
-    <string name="gajendra_pradhan">Gajendra Pradhan</string>
-    <string name="gajenpradhan18_gmail_com">Gajenpradhan18@gmail.com</string>
+    <string name="username">Tuychiev Toir</string>
+    <string name="contact_detail">toir427@gmail.com</string>
+    <string name="username2">Tuychiev Toir</string>
+    <string name="contact_detail2">tuychiev.toir@gmail.com</string>
     <string name="quizapp">QuizApp</string>
 </resources>

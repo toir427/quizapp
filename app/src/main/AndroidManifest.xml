@@ -15,9 +15,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tuychiev.quiz.QuestionsActivity">
+        <activity android:name="com.tuychiev.quiz.WordsActivity">
             <intent-filter>
-                <action android:name="com.tuychiev.quiz.QuestionsActivity" />
+                <action android:name="com.tuychiev.quiz.WordsActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.tuychiev.quiz.ResultActivity">
+            <intent-filter>
+                <action android:name="com.tuychiev.quiz.ResultActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -29,7 +36,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tuychiev.quiz.ResultActivity"></activity>
     </application>
 
 </manifest>

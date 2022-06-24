@@ -1,8 +1,11 @@
 package com.tuychiev.quiz;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -10,27 +13,34 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
-public class QuestionsActivity extends AppCompatActivity {
-    TextView tv;
+public class WordsActivity extends AppCompatActivity {
+    TextView tv, score, greetingUser;
     Button submitBtn, quitBtn;
     RadioGroup choice;
     RadioButton rb1, rb2, rb3, rb4;
-    Question cQuestion;
-    List<Question> questions;
+    Word cQuestion;
+    List<Word> questions;
+    String userName;
 
     int flag = 0;
     public static int cAnswers = 0, wAnswers = 0;
 
+    @SuppressLint("SetTextI18n")
+    @TargetApi(Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
-        final TextView score = (TextView) findViewById(R.id.textView4);
-        TextView greetingUser = (TextView) findViewById(R.id.DispName);
+        Intent intent = getIntent();
+        userName = intent.getStringExtra("username");
+        score = (TextView) findViewById(R.id.textView4);
+        greetingUser = (TextView) findViewById(R.id.DispName);
 
         submitBtn = (Button) findViewById(R.id.button3);
         quitBtn = (Button) findViewById(R.id.buttonquit);
@@ -42,19 +52,14 @@ public class QuestionsActivity extends AppCompatActivity {
         rb3 = (RadioButton) findViewById(R.id.radioButton3);
         rb4 = (RadioButton) findViewById(R.id.radioButton4);
 
-
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("myname");
-
-        if (name.trim().equals("")) {
-            greetingUser.setText("Hello User");
-        } else {
-            greetingUser.setText("Hello " + name);
-        }
-
-        Quiz quiz = new Quiz(getApplicationContext());
-        questions = quiz.getQuestions();
-        Collections.shuffle(questions);
+        WordQuiz quiz = new WordQuiz(getApplicationContext());
+        //questions = quiz.getWords();
+        List<Word> words = quiz.getWords();
+        Collections.shuffle(words);
+        questions = words.subList(words.size() - 50, words.size());
+        ///questions = quiz.getWords().stream().limit(100).collect(Collectors.toList());
+        score.setText("0 - 0" + " of " + questions.size());
+        setUsername("- 0 / " + questions.size());
         setCurrentQuestion(0);
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +72,7 @@ public class QuestionsActivity extends AppCompatActivity {
                 RadioButton radioBtnId = (RadioButton) findViewById(choice.getCheckedRadioButtonId());
                 String ansText = radioBtnId.getText().toString();
 
-                if (ansText.equals(cQuestion.getAnswer())) {
+                if (ansText.equals(cQuestion.getDef())) {
                     cAnswers++;
                     Toast.makeText(getApplicationContext(), "Correct Answers", Toast.LENGTH_SHORT).show();
                 } else {
@@ -77,8 +82,9 @@ public class QuestionsActivity extends AppCompatActivity {
 
                 flag++;
                 if (score != null)
-                    score.setText(String.valueOf(cAnswers));
+                    score.setText(String.valueOf(cAnswers) + " - " + flag + " of " + questions.size());
 
+                //setUsername(" - " + flag + "/" + questions.size());
                 if (flag < questions.size()) {
                     setCurrentQuestion(flag);
                 } else {
@@ -103,16 +109,38 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
+    private void setUsername(String plus) {
+        plus = "";
+        if (!userName.trim().equals("")) {
+            greetingUser.setText("Hello, " + userName + plus);
+        } else {
+            greetingUser.setText("Hello, User" + plus);
+        }
+    }
+
     private void setCurrentQuestion(int num) {
         cQuestion = questions.get(num);
-        List<String> options = cQuestion.getOptions();
+        List<Word> options = new ArrayList<Word>();
+        options.add(cQuestion);
+
+        for (int i = 0; i < 3; i++) {
+            Random rand = new Random();
+            int r = rand.nextInt(questions.size());
+            if (r == num)
+                r = rand.nextInt(questions.size());
+
+            Word word = questions.get(r);
+            options.add(word);
+        }
+
         Collections.shuffle(options);
 
-        tv.setText(cQuestion.getQuestion());
-        rb1.setText(options.get(0));
-        rb2.setText(options.get(1));
-        rb3.setText(options.get(2));
-        rb4.setText(options.get(3));
+        tv.setText(cQuestion.getWord());
+        rb1.setText(options.get(0).getDef());
+        rb2.setText(options.get(1).getDef());
+        rb3.setText(options.get(2).getDef());
+        rb4.setText(options.get(3).getDef());
     }
 
 }
