@@ -1,5 +1,6 @@
 package com.tuychiev.quiz;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ public class ResultActivity extends AppCompatActivity {
     TextView tv, tv2, tv3, tv4;
     Button btnRestart;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +24,15 @@ public class ResultActivity extends AppCompatActivity {
         tv4 = (TextView) findViewById(R.id.tvres4);
         btnRestart = (Button) findViewById(R.id.btnRestart);
 
-        tv.setText("Correct answers: " + getIntent().getStringExtra("CORRECT_ANSWERS"));
-        tv2.setText("Wrong answers: " + getIntent().getStringExtra("WRONG_ANSWERS"));
-        tv3.setText("Answered questions: " + getIntent().getStringExtra("ANSWERED_QUESTIONS"));
-        tv4.setText("Total questions: " + getIntent().getStringExtra("TOTAL_QUESTIONS"));
+        String correct = getIntent().getStringExtra("CORRECT_ANSWERS");
+        String wrong = getIntent().getStringExtra("WRONG_ANSWERS");
+        String answered = getIntent().getStringExtra("ANSWERED_QUESTIONS");
+        String total = getIntent().getStringExtra("TOTAL_QUESTIONS");
+
+        tv.setText("Correct answers: " + (correct == null ? "0" : correct));
+        tv2.setText("Wrong answers: " + (wrong == null ? "0" : wrong));
+        tv3.setText("Answered questions: " + (answered == null ? "0" : answered));
+        tv4.setText("Total questions: " + (total == null ? "0" : total));
 
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,5 +42,4 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
     }
-
 }
