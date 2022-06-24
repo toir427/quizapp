@@ -20,15 +20,14 @@ import java.util.Random;
 
 public class WordsActivity extends AppCompatActivity {
     TextView tv, score, greetingUser;
-    Button submitBtn, quitBtn;
+    Button submitBtn, resultBtn;
     RadioGroup choice;
     RadioButton rb1, rb2, rb3, rb4;
     Word cQuestion;
     List<Word> questions;
     String userName;
 
-    int flag = 0;
-    public static int cAnswers = 0, wAnswers = 0;
+    int cAnswers = 0, wAnswers = 0, flag = 0;
 
     @SuppressLint("SetTextI18n")
     @TargetApi(Build.VERSION_CODES.N)
@@ -43,7 +42,7 @@ public class WordsActivity extends AppCompatActivity {
         greetingUser = (TextView) findViewById(R.id.DispName);
 
         submitBtn = (Button) findViewById(R.id.button3);
-        quitBtn = (Button) findViewById(R.id.buttonquit);
+        resultBtn = (Button) findViewById(R.id.resultBtn);
         tv = (TextView) findViewById(R.id.tvque);
 
         choice = (RadioGroup) findViewById(R.id.answersgrp);
@@ -88,25 +87,27 @@ public class WordsActivity extends AppCompatActivity {
                 if (flag < questions.size()) {
                     setCurrentQuestion(flag);
                 } else {
-                    Intent resultIntent = new Intent(getApplicationContext(), ResultActivity.class);
-                    resultIntent.putExtra("CORRECT_ANSWERS", String.valueOf(cAnswers));
-                    resultIntent.putExtra("WRONG_ANSWERS", String.valueOf(wAnswers));
-                    resultIntent.putExtra("ANSWERED_QUESTIONS", String.valueOf(flag));
-                    resultIntent.putExtra("TOTAL_QUESTIONS", String.valueOf(questions.size()));
-
-                    startActivity(resultIntent);
+                    startResultActivity();
                 }
                 choice.clearCheck();
             }
         });
 
-        quitBtn.setOnClickListener(new View.OnClickListener() {
+        resultBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-                startActivity(intent);
+                startResultActivity();
             }
         });
+    }
+
+    public void startResultActivity() {
+        Intent resultIntent = new Intent(getApplicationContext(), ResultActivity.class);
+        resultIntent.putExtra("CORRECT_ANSWERS", String.valueOf(cAnswers));
+        resultIntent.putExtra("WRONG_ANSWERS", String.valueOf(wAnswers));
+        resultIntent.putExtra("ANSWERED_QUESTIONS", String.valueOf(flag));
+        resultIntent.putExtra("TOTAL_QUESTIONS", String.valueOf(questions.size()));
+        startActivity(resultIntent);
     }
 
     @SuppressLint("SetTextI18n")

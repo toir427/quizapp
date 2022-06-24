@@ -6,4 +6,6 @@
     <string name="username2">Tuychiev Toir</string>
     <string name="contact_detail2">tuychiev.toir@gmail.com</string>
     <string name="quizapp">QuizApp</string>
+    <string name="result_btn">Result</string>
+    <string name="next_question">Next Question</string>
 </resources>
